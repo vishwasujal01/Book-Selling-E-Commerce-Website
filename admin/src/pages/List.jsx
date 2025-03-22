@@ -2,8 +2,10 @@ import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import { backendUrl } from '../App'
 import { toast } from 'react-toastify'
+import { useNavigate } from 'react-router-dom'
 
 const List = ({token}) => {
+  const navigate = useNavigate();
 
   const [list, setList] = useState([])
 
@@ -24,6 +26,24 @@ const List = ({token}) => {
             toast.error(error.message)
         }
     }
+
+    const removeProduct = async (id) => {
+      try {
+          const response = await axios.post(backendUrl + '/api/product/remove', {id}, {headers:{token}})
+
+          if (response.data.success) {
+              toast.success(response.data.message)
+
+              await fetchList();
+          } else {
+              toast.error(response.data.message)
+          }
+
+      } catch (error) {
+          console.log(error);
+          toast.error(error.message)
+      }
+  }
 
     useEffect(() => {
       fetchList()
@@ -53,8 +73,8 @@ const List = ({token}) => {
                     <p>{item.name}</p>
                     <p>{item.author}</p>
                     <p>{item.price}</p>
-                    <p className='md:text-center cursor-pointer text-lg'>X</p>
-                    <p className='md:text-center cursor-pointer text-lg'>Edit</p>
+                    <p onClick={() => removeProduct(item._id)} className='md:text-center cursor-pointer text-lg'>X</p>
+                    <p onClick={() => navigate('/update', { state: item })} className='md:text-center cursor-pointer text-lg'>Edit</p>
                 </div>
             ))
         }

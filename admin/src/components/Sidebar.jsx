@@ -18,10 +18,10 @@ const Sidebar = () => {
         <p>List Users</p> 
       </NavLink>
 
-      {/* <NavLink className='flex items-center gap-3 border border-gray-300 border-r-0 px-3 py-2 rounded-1' to="/orders">
+      <NavLink className='flex items-center gap-3 border border-gray-300 border-r-0 px-3 py-2 rounded-1' to="/orders">
         <img src={assets.order_icon} alt="" />
-        <p>Update Users</p> 
-      </NavLink> */}
+        <p>Orders</p> 
+      </NavLink>
 
     </div>
     </div>

@@ -7,6 +7,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import Navbar from './components/Navbar';
 import Login from './components/Login'
 import { Navigate } from 'react-router-dom';
+import Orders from './pages/Orders'
 
 export const backendUrl = import.meta.env.VITE_BACKEND_URL
 
@@ -40,7 +41,7 @@ const App = () => {
               <>
                 <Route path="/add" element={<Add token={token} />} />
                 <Route path="/list" element={<List token={token} />} />
-                {/* <Route path="/orders" element={<Update token={token} />} /> */}
+                <Route path="/orders" element={<Orders token={token} />} />
               </>
             ) : (
               <Route path="*" element={<Navigate to="/login" />} />

@@ -55,4 +55,16 @@ const addProduct = async (req, res) => {
 
 }
 
-export { addProduct }; 
+//function for list product
+const listProducts = async (req, res) => {
+
+    try {
+        const products = await productModel.find({});
+        res.json({success: true, products});
+    } catch (error) {
+        console.log(error);
+        res.json({success: false, message: error.message})
+    }
+}
+
+export { addProduct, listProducts }; // Export functions to be used elsewhere in the application.

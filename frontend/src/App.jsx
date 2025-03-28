@@ -10,6 +10,8 @@ import Contact from './pages/Contact';
 import SearchBar from './components/SearchBar';
 import Product from './pages/Product';
 import Cart from './pages/Cart'
+import PlaceOrder from './pages/PlaceOrder';
+import Orders from './pages/Orders';
 
 
 const App = () => {
@@ -25,6 +27,9 @@ const App = () => {
         <Route path='/contact' element={<Contact />} />
         <Route path="/product/:productId" element={<Product />} />
         <Route path="/cart" element={<Cart />} />
+        <Route path="/place-order" element={<PlaceOrder />} />
+        <Route path="/orders" element={<Orders />} />
+        
       </Routes>
       <Footer />
     </div>

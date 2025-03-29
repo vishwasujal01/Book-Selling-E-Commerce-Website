@@ -58,9 +58,16 @@ const Collection = () => {
   }
 
 
+  // useEffect(() => {
+  //   setFilterProducts(products);
+  // },[])
+
   useEffect(() => {
-    setFilterProducts(products);
-  },[])
+    if (products.length > 0) {  
+      setFilterProducts(products);
+    }
+  }, [products]);
+  
 
   useEffect(() => {
     applyFilter();

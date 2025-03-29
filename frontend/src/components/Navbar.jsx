@@ -14,7 +14,7 @@ const Navbar = () => {
     localStorage.removeItem('token')
     setToken('')
     setCartItems({})
-}
+  }
 
   return (
     <div className='flex items-center justify-between py-1 mt-1 font-medium'>

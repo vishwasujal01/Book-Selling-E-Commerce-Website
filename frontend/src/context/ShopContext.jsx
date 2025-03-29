@@ -22,17 +22,28 @@ const ShopContextProvider = (props) => {
 
 
     const addToCart = async (itemId) => {
-        setCartItems((prevCart) => {
-            let cartData = { ...prevCart }; // Create a shallow copy
-    
-            if (cartData[itemId]) {
-                cartData[itemId] += 1;
-            } else {
-                cartData[itemId] = 1;
+
+        let cartData = structuredClone(cartItems);
+
+        if (cartData[itemId]) {
+            cartData[itemId] += 1;
+        } else {
+            cartData[itemId] = 1;
+        }
+
+        setCartItems(cartData);
+
+        if (token) {
+            try {
+
+               const response =  await axios.post(backendUrl + '/api/cart/add', {itemId}, {headers: {token}})
+               console.log(response.data);
+                
+            } catch (error) {
+                console.log(error);
+                toast.error(error.message)
             }
-    
-            return cartData;
-        });
+        } 
     };
 
     const getCartCount = () => {
@@ -55,7 +66,37 @@ const ShopContextProvider = (props) => {
         cartData[itemId] = quantity;
         setCartItems(cartData);
 
+        if (token) {
+            
+            try {
+                await axios.post(backendUrl + '/api/cart/update', {itemId, quantity}, {headers: {token}})
+            } catch (error) {
+                console.log(error);
+                toast.error(error.message)
+            }
+         }
+
     }
+
+
+    const getUserCart = async (token) => {
+
+        try {
+
+            const response = await axios.get(backendUrl + '/api/cart/get', { headers: { token } });
+            console.log(response.data);
+            
+            if (response.data.success) {
+                setCartItems(response.data.cartData)
+            }
+                
+        } catch (error) {
+            console.error("API Error:", error);
+            toast.error(error.message);
+        }
+    }
+
+    
 
     const getCartAmount = () => {
 
@@ -103,11 +144,18 @@ const ShopContextProvider = (props) => {
         getProductData()
     },[])
 
+    useEffect(() => {
+        if (!token && localStorage.getItem('token')) {
+            setToken(localStorage.getItem('token'))
+            getUserCart(localStorage.getItem('token'))
+        }
+    },[])
+
 
     const value = {
         currency, products, delivery_fee,
         search, setSearch, showSearch, setShowSearch,
-        cartItems, addToCart,
+        cartItems, addToCart, setCartItems,
         getCartCount, updateQuantity,
         getCartAmount, navigate, backendUrl,
         token, setToken,

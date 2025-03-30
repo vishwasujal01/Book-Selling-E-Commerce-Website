@@ -11,6 +11,7 @@ import Orders from './pages/Orders'
 import Update from './components/Update'
 
 export const backendUrl = import.meta.env.VITE_BACKEND_URL
+export const currency = "₹";
 
 
 const App = () => {

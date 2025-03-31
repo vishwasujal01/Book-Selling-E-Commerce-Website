@@ -19,7 +19,7 @@ connectCloudinary();
 //middlewares
 app.use(express.json())
 app.use(cors({
-        origin: ["https://bookstore-frontend-coral.vercel.app"], // Allow only frontend domain
+        origin: "*", // Allow only frontend domain
         methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"], // Allowed HTTP methods
         allowedHeaders: ["Content-Type", "Authorization"], // Allowed headers
         credentials: true, // Allow cookies & authentication headers if needed
